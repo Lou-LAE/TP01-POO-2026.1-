@@ -1,4 +1,4 @@
-# 🏦 Sistema de Gerenciamento de Banco
+# Sistema de Gerenciamento de Banco
 
 ## Descrição
 
