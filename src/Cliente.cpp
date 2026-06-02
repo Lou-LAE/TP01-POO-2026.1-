@@ -1,4 +1,5 @@
 #include "../include/Cliente.h"
+#include "../include/Transacao.h"
 #include "../include/Gerente.h"
 
 #include <iostream>
@@ -130,22 +131,22 @@ void Cliente::exibirClientes(vector<Cliente*>& clientes) {
 }
 
 bool associarGerenteCliente(vector<Gerente*>& gerentes, vector<Cliente*>& clientes) {
-    int g, c;
+    long unsigned int g, c;
 
     cout << "Escolha gerente: " << endl;
-    for (int i = 0; i < gerentes.size(); i++) {
+    for (long unsigned int i = 0; i < gerentes.size(); i++) {
         cout << i << " - " << gerentes[i]->getNome() << endl;
     }
     cin >> g;
 
     cout << "Escolha cliente: " << endl;
-    for (int i = 0; i < clientes.size(); i++) {
+    for (long unsigned int i = 0; i < clientes.size(); i++) {
         cout << i << " - " << clientes[i]->getNome() << endl;
     }
     cin >> c;
 
     if (g >= 0 && g < gerentes.size() && c >= 0 && c < clientes.size()) {
-        gerentes[g]->adicionarCliente(clientes[c]);
+        gerentes[g]->adicionarGerenteCliente(clientes[c]);
         return true;
     }
 

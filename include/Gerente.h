@@ -2,7 +2,6 @@
 #define GERENTE_H_
 
 #include "Pessoa.h"
-#include "Cliente.h"
 #include <string>
 #include <vector>
 

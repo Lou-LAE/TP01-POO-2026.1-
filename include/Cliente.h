@@ -2,11 +2,12 @@
 #define CLIENTE_H_
 
 #include "Pessoa.h"
-#include "Transacao.h"
-#include "Gerente.h"
 #include <vector>
 #include <string>
 using namespace std;
+
+class Gerente;
+class Transacao;
 
 // Declaração da classe Cliente, que herda da classe Pessoa
 class Cliente : public Pessoa{

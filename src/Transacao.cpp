@@ -83,14 +83,16 @@ Transacao* Transacao::criarTransacao(vector<Cliente*>& clientes) {
 
     // associar cliente
     cout << "Escolha cliente (indice): " << endl;
-    for (int i = 0; i < clientes.size(); i++) {
+    for (size_t i = 0; i < clientes.size(); i++) {
         cout << i << " - " << clientes[i]->getNome() << endl;
     }
 
-    int idx;
+    size_t idx;
     cin >> idx;
 
-    t->adicionarCliente(clientes[idx]);
+    if (idx < clientes.size()) {
+        t->setClientes(clientes[idx]);
+    }
 
     return t;
 }
