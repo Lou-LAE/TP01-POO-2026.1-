@@ -90,8 +90,36 @@ Transacao* Transacao::criarTransacao(vector<Cliente*>& clientes) {
     size_t idx;
     cin >> idx;
 
-    if (idx < clientes.size()) {
+    try {
+        if (idx >= clientes.size()) {
+            throw out_of_range("Index inválido");
+        }
         t->setClientes(clientes[idx]);
+    } catch (const out_of_range& e) {
+        cout << e.what() << endl;
+        delete t;
+        return nullptr;
+    }
+
+    if (tipo == "transferencia") {
+        cout << "Escolha cliente destinatário (indice): " << endl;
+        for (size_t i = 0; i < clientes.size(); i++) {
+            cout << i << " - " << clientes[i]->getNome() << endl;
+        }
+
+        size_t idxDest;
+        cin >> idxDest;
+
+        try {
+            if (idxDest >= clientes.size()) {
+                throw out_of_range("Index inválido");
+            }
+            t->setClientes(clientes[idxDest]);
+        } catch (const out_of_range& e) {
+            cout << e.what() << endl;
+            delete t;
+            return nullptr;
+        }
     }
 
     return t;

@@ -37,7 +37,15 @@ int main() {
             break;
 
             case 3://  criar transação
-                transacoes.push_back(Transacao::criarTransacao(clientes));
+                try{
+                    Transacao* t = Transacao::criarTransacao(clientes);
+                    if (t == nullptr)
+                        throw std::runtime_error("Falha ao criar transação. Verifique os dados e tente novamente.");
+                    transacoes.push_back(t);
+                }
+                catch(const std::runtime_error& e) {
+                    cerr << "Erro: " << e.what() << endl;
+                }
             break;
 
             case 4: { // exibir extrato de um cliente
