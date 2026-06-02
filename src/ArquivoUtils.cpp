@@ -18,35 +18,71 @@ void carregarClientes(vector<Cliente*>& clientes) {
 
     while (getline(arquivo, linha)) {
         stringstream ss(linha);
+        vector<string> tokens;
+        string token;
 
-        string nome, trabalho, login, senha, tipo;
-        string remuneracaoStr, saldoStr, taxaStr;
+        while (getline(ss, token, ',')) {
+            tokens.push_back(token);
+        }
 
-        getline(ss, nome, ',');
-        getline(ss, trabalho, ',');
-        getline(ss, login, ',');
-        getline(ss, senha, ',');
-        getline(ss, tipo, ',');
-        getline(ss, remuneracaoStr, ',');
-        getline(ss, saldoStr, ',');
-        getline(ss, taxaStr, ',');
+        if (tokens.size() == 8) {
+            string nome = tokens[0];
+            string trabalho = tokens[1];
+            string login = tokens[2];
+            string senha = tokens[3];
+            string tipo = tokens[4];
+            string remuneracaoStr = tokens[5];
+            string saldoStr = tokens[6];
+            string taxaStr = tokens[7];
 
-        double remuneracao = stod(remuneracaoStr);
-        double saldo = stod(saldoStr);
-        double taxa = stod(taxaStr);
+            try {
+                double remuneracao = remuneracaoStr.empty() ? 0.0 : stod(remuneracaoStr);
+                double saldo = saldoStr.empty() ? 0.0 : stod(saldoStr);
+                double taxa = taxaStr.empty() ? 0.0 : stod(taxaStr);
 
-        Cliente* c = new Cliente(
-            nome,
-            trabalho,
-            login,
-            senha,
-            tipo,
-            remuneracao,
-            saldo,
-            taxa
-        );
+                Cliente* c = new Cliente(
+                    nome,
+                    trabalho,
+                    login,
+                    senha,
+                    tipo,
+                    remuneracao,
+                    saldo,
+                    taxa
+                );
 
-        clientes.push_back(c);
+                clientes.push_back(c);
+            } catch (const invalid_argument&) {
+                cout << "Aviso: linha invalida em clientes.csv ignorada." << endl;
+            }
+        } else if (tokens.size() == 5) {
+            string nome = tokens[0];
+            string trabalho = tokens[1];
+            string login = tokens[2];
+            string senha = tokens[3];
+            string saldoStr = tokens[4];
+
+            try {
+                double saldo = saldoStr.empty() ? 0.0 : stod(saldoStr);
+
+                Cliente* c = new Cliente(
+                    nome,
+                    trabalho,
+                    login,
+                    senha,
+                    "corrente",
+                    0.0,
+                    saldo,
+                    0.0
+                );
+
+                clientes.push_back(c);
+            } catch (const invalid_argument&) {
+                cout << "Aviso: linha invalida em clientes.csv ignorada." << endl;
+            }
+        } else {
+            cout << "Aviso: formato desconhecido em clientes.csv ignorado." << endl;
+        }
     }
 
     arquivo.close();
@@ -60,7 +96,7 @@ void salvarClientes(vector<Cliente*>& clientes) {
         return;
     }
 
-    arquivo << "nome,trabalho,login,senha,saldo\n";
+    arquivo << "nome,trabalho,login,senha,tipo,remuneracao,saldo,taxa\n";
 
     for (Cliente* c : clientes) {
         arquivo 
@@ -68,7 +104,10 @@ void salvarClientes(vector<Cliente*>& clientes) {
             << c->getTrabalho() << ","
             << c->getLogin() << ","
             << c->getSenha() << ","
-            << c->getSaldo() << "\n";
+            << c->getTipoDeConta() << ","
+            << c->getRemuneracao() << ","
+            << c->getSaldo() << ","
+            << c->getTaxaDeRendimento() << "\n";
     }
 
     arquivo.close();
