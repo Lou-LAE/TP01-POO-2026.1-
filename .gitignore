@@ -3,3 +3,6 @@
 ./obj
 banco
 *.csv
+data/*.csv
+data/clientes.csv
+data/gerentes.csv
