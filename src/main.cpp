@@ -60,6 +60,10 @@ int main() {
                 Gerente::exibirGerentes(gerentes);
             break;
 
+            case 8: // encerra e salva
+                cout << "Salvando dados e encerrando operação..." << endl;
+            break;
+
             default:
                 cout << "Opção inválida!" << endl;
         }
