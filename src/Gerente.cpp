@@ -32,10 +32,11 @@ Gerente* Gerente::criarGerente() {
     string nome, trabalho, login, senha;
 
     cout << "Nome: ";
-    cin >> nome;
+    cin >> ws; // esvazia o buffer de entrada antes de prosseguir usando std::getline()
+    std::getline(std::cin, nome);
 
     cout << "Trabalho: ";
-    cin >> trabalho;
+    std::getline(std::cin, trabalho);
 
     cout << "Login: ";
     cin >> login;
